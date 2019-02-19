@@ -48,7 +48,7 @@ public final class SportSoccer implements Sport, Serializable{
 
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
 
     public String getName() {
