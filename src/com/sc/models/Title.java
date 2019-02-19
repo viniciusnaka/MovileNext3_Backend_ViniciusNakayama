@@ -1,13 +1,12 @@
 package com.sc.models;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class Title {
 
-    private final List<Championship> championships;
+    private final Set<Championship> championships;
 
-    public Title(List<Championship> championships) {
+    public Title(Set<Championship> championships) {
         if (championships == null) {
             throw new NullPointerException("Championships cannot be null");
         }
@@ -17,7 +16,7 @@ public class Title {
         this.championships = championships;
     }
 
-    public List<Championship> getChampionships() {
+    public Set<Championship> getChampionships() {
         return championships;
     }
 }

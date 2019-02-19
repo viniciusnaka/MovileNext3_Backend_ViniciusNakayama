@@ -3,22 +3,22 @@ package com.sc.models;
 import com.sc.core.Sport;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Team {
 
     private String name;
-    private List<Player> players;
+    private Set<Player> players;
     private Manager manager;
     private final Sport sport;
-    private Date dateFundation;
+    private final Date dateFundation;
     private String address;
     private int numberEndereco;
     private Map<Integer, Player> numbersUniform;
-    private List<Title> titles;
+    private final Set<Title> titles;
 
-    public Team(String name, List<Player> players, Manager manager, Sport sport, Date dateFundation, String address, int numberEndereco, Map<Integer, Player> numbersUniform, List<Title> titles) {
+    public Team(String name, Set<Player> players, Manager manager, Sport sport, Date dateFundation, String address, int numberEndereco, Map<Integer, Player> numbersUniform, Set<Title> titles) {
         this.name = name;
         this.players = players;
         this.manager = manager;

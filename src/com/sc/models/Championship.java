@@ -2,13 +2,13 @@ package com.sc.models;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public final class Championship {
 
     private String name;
     private SportSoccer sport;
-    private List<Team> teams;
+    private Set<Team> teams;
     private Date begin;
     private Date end;
 
@@ -36,11 +36,11 @@ public final class Championship {
         this.sport = sport;
     }
 
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
 
