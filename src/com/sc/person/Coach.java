@@ -1,17 +1,19 @@
-package com.sc.models;
+package com.sc.person;
 
+import com.sc.helper.EnumHelper;
+import com.sc.team.Team;
 import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class Manager extends Person {
+public class Coach extends Person {
 
-    private Team team;
-    private Date contractStartDate;
-    private Date contractEndDate;
+    private final Team team;
+    private final Date contractStartDate;
+    private final Date contractEndDate;
 
-    public Manager(String firstName, String lastName, DateTime bornDate, String document, Team team, Date contractStartDate, Date contractEndDate) {
-        super(firstName, lastName, bornDate, document);
+    public Coach(String firstName, String lastName, DateTime bornDate, EnumHelper.Gender gender, Team team, Date contractStartDate, Date contractEndDate) {
+        super(firstName, lastName, bornDate, gender);
 
         if(team == null){
             throw new NullPointerException("Object Team cannot be null.");
@@ -29,32 +31,21 @@ public class Manager extends Person {
             throw new NullPointerException("ContractEndDate cannot be before today.");
         }
 
-        this.setTeam(team);
-        this.setContractStartDate(contractStartDate);
-        this.setContractEndDate(contractEndDate);
+        this.team = team;
+        this.contractStartDate = contractStartDate;
+        this.contractEndDate = contractEndDate;
     }
 
     public Team getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     public Date getContractStartDate() {
         return contractStartDate;
-    }
-
-    public void setContractStartDate(Date contractStartDate) {
-        this.contractStartDate = contractStartDate;
     }
 
     public Date getContractEndDate() {
         return contractEndDate;
     }
 
-    public void setContractEndDate(Date contractEndDate) {
-        this.contractEndDate = contractEndDate;
-    }
 }

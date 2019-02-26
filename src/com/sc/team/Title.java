@@ -1,4 +1,6 @@
-package com.sc.models;
+package com.sc.team;
+
+import com.sc.helper.Championship;
 
 import java.util.Set;
 
