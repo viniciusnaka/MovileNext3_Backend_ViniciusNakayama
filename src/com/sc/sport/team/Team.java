@@ -1,7 +1,7 @@
-package com.sc.team;
+package com.sc.sport.team;
 
 import com.sc.helper.EnumHelper;
-import com.sc.person.Coach;
+import com.sc.sport.person.Coach;
 import com.sc.sport.Sport;
 
 import java.util.*;

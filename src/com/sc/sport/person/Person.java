@@ -1,4 +1,4 @@
-package com.sc.person;
+package com.sc.sport.person;
 
 import com.sc.helper.EnumHelper;
 import org.joda.time.DateTime;

@@ -1,10 +1,10 @@
-package com.sc.team;
+package com.sc.sport.types.soccer;
 
 import com.sc.helper.EnumHelper;
-import com.sc.person.Coach;
-import com.sc.person.Player;
-import com.sc.person.PlayerSoccer;
+import com.sc.sport.person.Coach;
+import com.sc.sport.person.Player;
 import com.sc.sport.Sport;
+import com.sc.sport.team.Team;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -57,7 +57,7 @@ public class TeamSoccer extends Team implements Serializable{
         if(players == null || players.isEmpty()){
             throw new IllegalArgumentException("Players cannot be null or empty");
         } else if(players.size() < 11){
-            throw new IllegalArgumentException("Players cannot be quantity minor 11");
+            throw new IllegalArgumentException("Players cannot be number minor 11");
         }
 
         int i = 0;

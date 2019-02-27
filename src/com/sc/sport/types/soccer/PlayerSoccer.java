@@ -1,7 +1,8 @@
-package com.sc.person;
+package com.sc.sport.types.soccer;
 
 import com.sc.helper.EnumHelper;
-import com.sc.team.Team;
+import com.sc.sport.person.Player;
+import com.sc.sport.team.Team;
 import org.joda.time.DateTime;
 
 public class PlayerSoccer extends Player {

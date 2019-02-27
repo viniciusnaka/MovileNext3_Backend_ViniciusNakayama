@@ -1,9 +1,6 @@
-package com.sc.match.soccer;
+package com.sc.sport.types.soccer;
 
-import com.sc.person.PlayerSoccer;
-import org.joda.time.DateTime;
-
-public class Goal {
+public class GoalSoccer {
 
     private final PlayerSoccer player;
     private final PlayerSoccer assistBy;
@@ -14,7 +11,7 @@ public class Goal {
         AGAINST, TEAMGOAL
     }
 
-    public Goal(PlayerSoccer player, PlayerSoccer assistBy, double time, TypeGoal typeGoal) {
+    public GoalSoccer(PlayerSoccer player, PlayerSoccer assistBy, double time, TypeGoal typeGoal) {
         if (player == null) {
             throw new NullPointerException("Player cannot be null");
         }

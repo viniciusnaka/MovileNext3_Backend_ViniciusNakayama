@@ -1,6 +1,6 @@
-package com.sc.team;
+package com.sc.sport.team;
 
-import com.sc.helper.Championship;
+import com.sc.sport.championship.Championship;
 
 import java.util.Set;
 

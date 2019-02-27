@@ -1,15 +1,14 @@
-package com.sc.match.soccer;
+package com.sc.sport.types.soccer;
 
 import com.sc.helper.EnumHelper;
-import com.sc.person.PlayerSoccer;
 
-public class Card {
+public class CardSoccer {
 
     private final PlayerSoccer player;
     private final EnumHelper.Card card;
     private final double time;
 
-    public Card(PlayerSoccer player, EnumHelper.Card card, double time) {
+    public CardSoccer(PlayerSoccer player, EnumHelper.Card card, double time) {
         if (player == null) {
             throw new NullPointerException("Player cannot be null");
         }

@@ -1,15 +1,5 @@
 package com.sc.test;
 
-import com.sc.person.Coach;
-import com.sc.sport.Sport;
-import com.sc.team.*;
-import com.sc.person.Player;
-import org.joda.time.DateTime;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeMap;
-
 public class TestSport {
 
     /*static Team team = createTeam();
@@ -113,4 +103,17 @@ public class TestSport {
         }
         return numbersUniform;
     }*/
+
+    public static void main(String[] args) {
+        int rounds = 2;
+        int numberClassifieds = 0;
+        int playoffs = 0;
+        while(numberClassifieds / rounds > 0) {
+            playoffs += numberClassifieds;
+            numberClassifieds = numberClassifieds / rounds;
+        }
+        System.out.println(playoffs);
+    }
+
+
 }

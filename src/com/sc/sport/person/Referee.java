@@ -1,7 +1,7 @@
-package com.sc.person;
+package com.sc.sport.person;
 
 import com.sc.helper.EnumHelper;
-import com.sc.match.Match;
+import com.sc.sport.match.Match;
 import org.joda.time.DateTime;
 
 public class Referee<T> extends Person{

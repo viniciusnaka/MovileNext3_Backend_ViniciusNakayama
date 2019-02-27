@@ -1,15 +1,12 @@
-package com.sc.match.soccer;
+package com.sc.sport.types.soccer;
 
-import com.sc.person.PlayerSoccer;
-import com.sc.team.TeamSoccer;
-
-public class Substitution {
+public class SubstitutionSoccer {
 
     private final PlayerSoccer playerExited;
     private final PlayerSoccer playerCameIn;
     private final double time;
 
-    public Substitution(TeamSoccer teamSoccer, PlayerSoccer playerExited, PlayerSoccer playerCameIn, double time) {
+    public SubstitutionSoccer(TeamSoccer teamSoccer, PlayerSoccer playerExited, PlayerSoccer playerCameIn, double time) {
         if (playerExited == null) {
             throw new NullPointerException("PlayerExited cannot be null");
         }

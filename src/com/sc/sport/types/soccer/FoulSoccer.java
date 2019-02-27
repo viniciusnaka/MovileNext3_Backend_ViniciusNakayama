@@ -1,15 +1,13 @@
-package com.sc.match.soccer;
+package com.sc.sport.types.soccer;
 
-import com.sc.person.PlayerSoccer;
-
-public class Foul {
+public class FoulSoccer {
 
     private final PlayerSoccer player;
     private final PlayerSoccer received;
     private final double time;
-    private Card card;
+    private CardSoccer cardSoccer;
 
-    public Foul(PlayerSoccer player, PlayerSoccer received, double time, Card card) {
+    public FoulSoccer(PlayerSoccer player, PlayerSoccer received, double time, CardSoccer cardSoccer) {
         if (player == null) {
             throw new NullPointerException("Player cannot be null");
         }
@@ -19,14 +17,14 @@ public class Foul {
         if (time < 0.0 || time > 120) {
             throw new IllegalArgumentException("Time cannot be major than 120 or minor 0.0");
         }
-        if(card != null && !player.equals(card.getPlayer())){
-            throw new IllegalArgumentException("Player and Card.Player need be of same");
+        if(cardSoccer != null && !player.equals(cardSoccer.getPlayer())){
+            throw new IllegalArgumentException("Player and CardSoccer.Player need be of same");
         }
 
         this.player = player;
         this.received = received;
         this.time = time;
-        this.card = card;
+        this.cardSoccer = cardSoccer;
     }
 
     public PlayerSoccer getPlayer() {
@@ -41,11 +39,11 @@ public class Foul {
         return time;
     }
 
-    public Card getCard() {
-        return card;
+    public CardSoccer getCardSoccer() {
+        return cardSoccer;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardSoccer(CardSoccer cardSoccer) {
+        this.cardSoccer = cardSoccer;
     }
 }
