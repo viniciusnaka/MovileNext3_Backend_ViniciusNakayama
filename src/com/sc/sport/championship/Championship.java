@@ -1,21 +1,18 @@
 package com.sc.sport.championship;
 
-import com.sc.sport.Sport;
-
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 public class Championship<T> {
 
-    private final Sport sport;
+    private String name;
     private Date begin;
     private Date end;
-    private Set<T> teams; // team or player(individual)
+    private Map<String, T> teams; // team or player(individual)
     private final ChampionshipFormat format;
 
-    public Championship(Sport sport, Date begin, Date end, Set<T> teams, ChampionshipFormat format) {
-        if (sport == null) {
-            throw new NullPointerException("Sport cannot be null");
+    public Championship(String name, Date begin, Date end, Map<String, T> teams, ChampionshipFormat format) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
         }
         if (begin == null || end == null){
             throw new IllegalArgumentException("Begin or End cannot be null");
@@ -31,15 +28,11 @@ public class Championship<T> {
             throw new NullPointerException("ChampionshipFormat cannot be null");
         }
 
-        this.sport = sport;
-        this.begin = begin;
-        this.end = end;
-        this.teams = teams;
+        this.setName(name);
+        this.setBegin(begin);
+        this.setEnd(end);
+        this.setTeams(teams);
         this.format = format;
-    }
-
-    public Sport getSport() {
-        return sport;
     }
 
     public Date getBegin() {
@@ -58,11 +51,7 @@ public class Championship<T> {
         this.end = end;
     }
 
-    public Set<T> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(Set<T> teams) {
+    public void setTeams(Map<String, T> teams) {
         this.teams = teams;
     }
 
@@ -70,4 +59,15 @@ public class Championship<T> {
         return format;
     }
 
+    public Map<String, T> getTeams() {
+        return teams;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

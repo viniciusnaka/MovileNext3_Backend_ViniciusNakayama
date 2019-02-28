@@ -8,19 +8,14 @@ import java.util.Date;
 
 public class Player extends Person{
 
-    private final Team team;
+    private Team team;
     private Date contractStartDate;
     private Date contractEndDate;
     private double weight;
     private double height;
 
-    public Player(String firstName, String lastName, DateTime bornDate, Team team, EnumHelper.Gender gender, double weight, double height) {
+    public Player(String firstName, String lastName, DateTime bornDate, EnumHelper.Gender gender, double weight, double height) {
         super(firstName, lastName, bornDate, gender);
-        if(team == null){
-            throw new NullPointerException("Team cannot be null");
-        } else if(team.getGender() != gender){
-            throw new IllegalStateException("The gender of Player is different from Team");
-        }
         if(weight < 40){
             throw new IllegalArgumentException("Weight cannot be minor than 40.");
         }
@@ -30,11 +25,19 @@ public class Player extends Person{
 
         this.setWeight(weight);
         this.setHeight(height);
-        this.team = team;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public void setTeam(Team team) {
+        if(team == null){
+            throw new NullPointerException("Team cannot be null");
+        } else if(team.getGender() != super.getGender()){
+            throw new IllegalStateException("The gender of Player is different from Team");
+        }
+        this.team = team;
     }
 
     public Date getContractStartDate() {

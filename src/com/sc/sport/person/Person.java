@@ -40,4 +40,8 @@ public class Person implements Serializable{
         return bornDate;
     }
 
+    public EnumHelper.Gender getGender() {
+        return gender;
+    }
+
 }

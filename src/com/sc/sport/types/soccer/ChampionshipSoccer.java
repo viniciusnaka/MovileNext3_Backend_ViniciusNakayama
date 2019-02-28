@@ -3,12 +3,10 @@ package com.sc.sport.types.soccer;
 import com.sc.sport.championship.Championship;
 import com.sc.sport.championship.ChampionshipFormat;
 import com.sc.sport.round.Rounds;
-import com.sc.sport.Sport;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
-public class ChampionshipSoccer extends Championship<TeamSoccer> implements Rounds<RoundSoccer, TeamSoccer> {
+public class ChampionshipSoccer extends Championship<TeamSoccer> implements Rounds<RoundSoccer> {
 
     private static final int timesByGame = 2;
     private static final int minutesByTime = 45;
@@ -21,24 +19,21 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
     private final int maxSubstitutionsByTeam;
     private final int maxSubscribersByTeam;
     private final int totalPlayersTitular;
-    private Set<RoundSoccer> roundSoccers;
+    private TreeMap<Integer, RoundSoccer> roundSoccers;
 
-    public ChampionshipSoccer(Sport sport, Date begin, Date end, Set<TeamSoccer> teams, ChampionshipFormat championshipFormat,
+    public ChampionshipSoccer(String name, Date begin, Date end, Map<String, TeamSoccer> teams, ChampionshipFormat championshipFormat,
                               int numberTeams, int totalPlayersTitular, int totalPlayersReserve,
                               int maxSubstitutionsByTeam, int maxSubscribersByTeam, int numberClassifiedsByGroup,
                               int numberClassifiedsByAllPlayoffs, boolean roundTrip) {
-        super(sport, begin, end, teams, championshipFormat);
+        super(name, begin, end, teams, championshipFormat);
 
         championshipFormat.setRoundtrip(roundTrip);
         if(championshipFormat.getFormat().equals(ChampionshipFormat.Format.ALL_AGAINST_ALL)){
-            championshipFormat.setAllAgainstAll(true);
             this.setLimitRounds(getNumberRounds(numberTeams, 0, roundTrip, championshipFormat));
         } else if(championshipFormat.getFormat().equals(ChampionshipFormat.Format.ALL_AGAINST_ALL_PLAYOFFS)){
-            championshipFormat.setAllAgainstAllPlayoffs(true);
             championshipFormat.setNumberClassifiedsByAllPlayoffs(numberClassifiedsByAllPlayoffs);
             this.setLimitRounds(getNumberRounds(numberTeams, numberClassifiedsByAllPlayoffs, roundTrip, championshipFormat));
         } else {
-            championshipFormat.setGroupPlayoffs(true);
             championshipFormat.setNumberClassifiedsByGroup(numberClassifiedsByGroup);
             this.setLimitRounds(getNumberRounds(numberTeams, numberClassifiedsByGroup, roundTrip, championshipFormat));
         }
@@ -73,14 +68,11 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
         }
     }
 
-
     @Override
-    public Set<RoundSoccer> getRounds(Championship<TeamSoccer> championship) {
-        return null;
-    }
-
-    @Override
-    public RoundSoccer getRoundsByRound(int round, Championship<RoundSoccer> championship) {
+    public RoundSoccer getRound(int round, Championship championship) {
+        if(this.equals(championship)){
+            return getRoundSoccers().get(round);
+        }
         return null;
     }
 
@@ -96,11 +88,11 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
         this.limitRounds = limitRounds;
     }
 
-    public Set<RoundSoccer> getRoundSoccers() {
+    public TreeMap<Integer, RoundSoccer> getRoundSoccers() {
         return roundSoccers;
     }
 
-    public void setRoundSoccers(Set<RoundSoccer> roundSoccers) {
+    public void setRoundSoccers(TreeMap<Integer, RoundSoccer> roundSoccers) {
         this.roundSoccers = roundSoccers;
     }
 

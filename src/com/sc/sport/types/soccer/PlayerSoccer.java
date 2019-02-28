@@ -2,7 +2,6 @@ package com.sc.sport.types.soccer;
 
 import com.sc.helper.EnumHelper;
 import com.sc.sport.person.Player;
-import com.sc.sport.team.Team;
 import org.joda.time.DateTime;
 
 public class PlayerSoccer extends Player {
@@ -58,9 +57,9 @@ public class PlayerSoccer extends Player {
     }
 
     public PlayerSoccer(String firstName, String lastName, DateTime bornDate,
-                        EnumHelper.TypePlayer typePlayer, Team team, EnumHelper.Gender gender,
+                        EnumHelper.TypePlayer typePlayer, EnumHelper.Gender gender,
                         double weight, double height, Position preferredPosition, Foot preferredFoot) {
-        super(firstName, lastName, bornDate, team, gender, weight, height);
+        super(firstName, lastName, bornDate, gender, weight, height);
 
         this.setTypePlayer(typePlayer);
         this.setPreferredPosition(preferredPosition);

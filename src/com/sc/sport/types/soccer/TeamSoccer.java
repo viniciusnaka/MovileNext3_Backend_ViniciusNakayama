@@ -1,22 +1,17 @@
 package com.sc.sport.types.soccer;
 
 import com.sc.helper.EnumHelper;
-import com.sc.sport.person.Coach;
-import com.sc.sport.person.Player;
-import com.sc.sport.Sport;
 import com.sc.sport.team.Team;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class TeamSoccer extends Team implements Serializable{
 
     private Set<PlayerSoccer> players;
     private PlayerSoccer captain; // only one
     private Formation formation;
-    private TreeMap<Integer, Player> numbersUniform;
+    private TreeMap<Integer, PlayerSoccer> numbersUniform;
 
     public enum Formation {
 
@@ -49,30 +44,8 @@ public class TeamSoccer extends Team implements Serializable{
         }
     }
 
-    public TeamSoccer(String fullName, String nickName, Sport sport, Set<PlayerSoccer> players, Coach coach,
-                      Date dateFundation, String address, int numberEndereco, EnumHelper.Gender gender,
-                      PlayerSoccer captain, Formation formation) {
-        super(fullName, nickName, sport, coach, dateFundation, address, numberEndereco, gender);
-
-        if(players == null || players.isEmpty()){
-            throw new IllegalArgumentException("Players cannot be null or empty");
-        } else if(players.size() < 11){
-            throw new IllegalArgumentException("Players cannot be number minor 11");
-        }
-
-        int i = 0;
-        for(PlayerSoccer player : players){
-            if(player.equals(captain)){
-                i++;
-            }
-        }
-        if(i > 1){
-            throw new IllegalArgumentException("Cannot having more than 1 captain in the Team");
-        }
-
-
-        this.setCaptain(captain);
-        this.setFormation(formation);
+    public TeamSoccer(String fullName, String nickName, Date dateFundation, String address, int numberEndereco, EnumHelper.Gender gender) {
+        super(fullName, nickName, dateFundation, address, numberEndereco, gender);
     }
 
     public PlayerSoccer getCaptain() {
@@ -96,14 +69,19 @@ public class TeamSoccer extends Team implements Serializable{
     }
 
     public void setPlayers(Set<PlayerSoccer> players) {
+        if(players == null || players.isEmpty()){
+            throw new IllegalArgumentException("Players cannot be null or empty");
+        } else if(players.size() < 11){
+            throw new IllegalArgumentException("Players cannot be number minor 11");
+        }
         this.players = players;
     }
 
-    public TreeMap<Integer, Player> getNumbersUniform() {
+    public TreeMap<Integer, PlayerSoccer> getNumbersUniform() {
         return numbersUniform;
     }
 
-    public void setNumbersUniform(TreeMap<Integer, Player> numbersUniform) {
+    public void setNumbersUniform(TreeMap<Integer, PlayerSoccer> numbersUniform) {
         this.numbersUniform = numbersUniform;
     }
 }

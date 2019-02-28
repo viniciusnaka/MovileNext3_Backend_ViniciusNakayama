@@ -2,13 +2,13 @@ package com.sc.sport.types.soccer;
 
 import java.util.*;
 
-public class RoundSoccer<T> {
+public class RoundSoccer {
 
     private final int round;
     private final int numberMatches;
-    private final Set<T> matchesPlayed;
+    private final Set<TeamSoccer> matchesPlayed;
 
-    public RoundSoccer(int round, int numberMatches, Set<T> matchesPlayed) {
+    public RoundSoccer(int round, int numberMatches, Set<TeamSoccer> matchesPlayed) {
         if(round < 1){
             throw new IllegalArgumentException("RoundSoccer cannot be minor than 1");
         }
@@ -35,7 +35,7 @@ public class RoundSoccer<T> {
         return numberMatches;
     }
 
-    public Set<T> getMatchesPlayed() {
+    public Set<TeamSoccer> getMatchesPlayed() {
         return matchesPlayed;
     }
 }

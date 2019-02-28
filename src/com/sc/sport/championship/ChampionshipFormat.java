@@ -8,11 +8,6 @@ public class ChampionshipFormat {
     private boolean roundtrip;
 
     /**
-     * jogos em grupo na primeira fase
-     */
-    private boolean groupPlayoffs;
-
-    /**
      * numero de teams por grupo na primeira fase
      */
     private int numberTeamsByGroup;
@@ -23,15 +18,6 @@ public class ChampionshipFormat {
      */
     private int numberClassifiedsByGroup;
 
-    /**
-     * somente jogos todos contra todos
-     */
-    private boolean allAgainstAll;
-
-    /**
-     * primeira fase todos contra todos, segunda fase eliminatoria
-     */
-    private boolean allAgainstAllPlayoffs;
     /**
      * determina o numero de classificados para a segunda fase
      * usado para allAgainstAllPlayoffs
@@ -48,22 +34,22 @@ public class ChampionshipFormat {
 
     }
 
-    public ChampionshipFormat(boolean roundtrip, boolean groupPlayoffs, int numberTeamsByGroup, boolean allAgainstAll,
-                              boolean allAgainstAllPlayoffs, int numberClassifiedsByGroup, int numberClassifiedsByAllPlayoffs, Format format) {
+    public ChampionshipFormat(boolean roundtrip, int numberTeamsByGroup,
+                              int numberClassifiedsByGroup, int numberClassifiedsByAllPlayoffs, Format format) {
         if (format == null) {
             throw new NullPointerException("Format cannot be null");
         }
 
-        this.roundtrip = roundtrip;
-        this.groupPlayoffs = groupPlayoffs;
-        this.numberTeamsByGroup = numberTeamsByGroup;
-        this.allAgainstAll = allAgainstAll;
-        this.allAgainstAllPlayoffs = allAgainstAllPlayoffs;
-        this.numberClassifiedsByGroup = numberClassifiedsByGroup;
-        this.numberClassifiedsByAllPlayoffs = numberClassifiedsByAllPlayoffs;
+        this.setRoundtrip(roundtrip);
+        this.setNumberTeamsByGroup(numberTeamsByGroup);
+        this.setNumberClassifiedsByGroup(numberClassifiedsByGroup);
+        this.setNumberClassifiedsByAllPlayoffs(numberClassifiedsByAllPlayoffs);
         this.format = format;
     }
 
+    /**
+     * jogos de ida e volta
+     */
     public boolean isRoundtrip() {
         return roundtrip;
     }
@@ -72,14 +58,9 @@ public class ChampionshipFormat {
         this.roundtrip = roundtrip;
     }
 
-    public boolean isGroupPlayoffs() {
-        return groupPlayoffs;
-    }
-
-    public void setGroupPlayoffs(boolean groupPlayoffs) {
-        this.groupPlayoffs = groupPlayoffs;
-    }
-
+    /**
+     * numero de teams por grupo na primeira fase
+     */
     public int getNumberTeamsByGroup() {
         return numberTeamsByGroup;
     }
@@ -88,22 +69,10 @@ public class ChampionshipFormat {
         this.numberTeamsByGroup = numberTeamsByGroup;
     }
 
-    public boolean isAllAgainstAll() {
-        return allAgainstAll;
-    }
-
-    public void setAllAgainstAll(boolean allAgainstAll) {
-        this.allAgainstAll = allAgainstAll;
-    }
-
-    public boolean isAllAgainstAllPlayoffs() {
-        return allAgainstAllPlayoffs;
-    }
-
-    public void setAllAgainstAllPlayoffs(boolean allAgainstAllPlayoffs) {
-        this.allAgainstAllPlayoffs = allAgainstAllPlayoffs;
-    }
-
+    /**
+     * determina o numero de classificados para a segunda fase
+     * usado para groupPlayoffs
+     */
     public int getNumberClassifiedsByGroup() {
         return numberClassifiedsByGroup;
     }
@@ -112,6 +81,10 @@ public class ChampionshipFormat {
         this.numberClassifiedsByGroup = numberClassifiedsByGroup;
     }
 
+    /**
+     * determina o numero de classificados para a segunda fase
+     * usado para allAgainstAllPlayoffs
+     */
     public int getNumberClassifiedsByAllPlayoffs() {
         return numberClassifiedsByAllPlayoffs;
     }

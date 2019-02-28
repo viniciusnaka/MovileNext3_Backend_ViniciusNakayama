@@ -8,7 +8,7 @@ public class Referee<T> extends Person{
 
     private T match;
 
-    public Referee(String firstName, String lastName, DateTime bornDate, EnumHelper.Gender gender) {
+    public Referee(String firstName, String lastName, DateTime bornDate, EnumHelper.Gender gender, T match) {
         super(firstName, lastName, bornDate, gender);
         if(match == null){
             throw new NullPointerException("Match cannot be null");
