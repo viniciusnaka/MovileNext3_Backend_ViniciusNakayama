@@ -20,8 +20,9 @@ public class MatchSoccer implements Match<MatchSoccer> {
     private Map<Integer, MatchSoccerStatistics> statistics;
     private final TeamSoccer teamHome;
     private final TeamSoccer teamVisitor;
+    private final ChampionshipSoccer championshipSoccer;
 
-    public MatchSoccer(DateTime date, String venue, Referee referee, boolean playoff, int totalPlayersTitular, int totalPlayersReserve, int maxSubstitionsPerTeam, TeamSoccer teamHome, TeamSoccer teamVisitor) {
+    public MatchSoccer(DateTime date, String venue, Referee referee, boolean playoff, TeamSoccer teamHome, TeamSoccer teamVisitor, ChampionshipSoccer championshipSoccer) {
         if (date == null || date.isAfterNow()) {
             throw new IllegalArgumentException("Date cannot be null or after now");
         }
@@ -31,20 +32,21 @@ public class MatchSoccer implements Match<MatchSoccer> {
         if (referee == null) {
             throw new NullPointerException("Referee cannot be null");
         }
-        if (totalPlayersTitular < 5) {
-            throw new IllegalArgumentException("TotalPlayersTitular cannot be minor than 5");
-        }
-        if (totalPlayersReserve < 1) {
-            throw new IllegalArgumentException("TotalPlayersReserve cannot be minor than 1");
-        }
-        if (maxSubstitionsPerTeam < 1) {
-            throw new IllegalArgumentException("MaxSubstitionsPerTeam cannot be minor than 1");
-        }
         if (teamHome == null) {
             throw new NullPointerException("TeamHome cannot be null");
         }
         if (teamVisitor == null) {
             throw new NullPointerException("TeamVisitor cannot be null");
+        }
+        if (championshipSoccer == null) {
+            throw new NullPointerException("ChampionshipSoccer cannot be null");
+        }
+        int quantityPlayersChampionship = championshipSoccer.getTotalPlayersTitular() + championshipSoccer.getTotalPlayersReserve();
+        if(quantityPlayersChampionship != teamHome.getPlayers().size()){
+            throw new IllegalArgumentException("The quantity from players of TeamHome cannot be different than Championship");
+        }
+        if(quantityPlayersChampionship != teamVisitor.getPlayers().size()){
+            throw new IllegalArgumentException("The quantity from players of TeamVisitor cannot be different than Championship");
         }
 
         this.date = date;
@@ -53,6 +55,7 @@ public class MatchSoccer implements Match<MatchSoccer> {
         this.playoff = playoff;
         this.teamHome = teamHome;
         this.teamVisitor = teamVisitor;
+        this.championshipSoccer = championshipSoccer;
     }
 
     /**
@@ -150,5 +153,9 @@ public class MatchSoccer implements Match<MatchSoccer> {
 
     public TeamSoccer getTeamVisitor() {
         return teamVisitor;
+    }
+
+    public ChampionshipSoccer getChampionshipSoccer() {
+        return championshipSoccer;
     }
 }

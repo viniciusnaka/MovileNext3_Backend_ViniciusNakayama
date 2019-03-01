@@ -4,8 +4,10 @@ import com.sc.helper.EnumHelper;
 import com.sc.sport.championship.Championship;
 import com.sc.sport.championship.ChampionshipFormat;
 import com.sc.sport.person.Coach;
-import com.sc.sport.types.soccer.PlayerSoccer;
-import com.sc.sport.types.soccer.TeamSoccer;
+import com.sc.sport.person.Referee;
+import com.sc.sport.team.Team;
+import com.sc.sport.types.soccer.*;
+import org.hamcrest.Matcher;
 import org.joda.time.DateTime;
 import org.junit.*;
 
@@ -15,44 +17,53 @@ import java.util.*;
 public class TestSoccer {
 
     @Test
-    public void runTest(){
+    public void runTest() {
+
         System.out.println("Inicio TestSoccer");
         int numberTeams = 20;
         System.out.println("numberTeams: " + numberTeams);
 
-        Championship<TeamSoccer> championship = this.createChampionship(numberTeams);
-        System.out.println(championship.getName());
-        Assert.assertNotNull(championship);
+        ChampionshipSoccer championshipSoccer = this.createChampionshipSoccer(numberTeams);
+        Assert.assertNotNull(championshipSoccer);
+        System.out.println("Championship: " + championshipSoccer.getName());
 
-        Map<String, TeamSoccer> teams = championship.getTeams();
+        Map<String, TeamSoccer> teams = championshipSoccer.getTeams();
+        Assert.assertEquals(teams.size(), numberTeams);
         System.out.println("### Times participantes ###");
-        for (TeamSoccer soccer : teams.values()){
+        for (TeamSoccer soccer : teams.values()) {
             System.out.println(soccer.getNickName());
         }
-        Assert.assertEquals(teams.size(), numberTeams);
 
+        int rounds = championshipSoccer.getLimitRounds();
+        for (int i = 1; i <= rounds; i++) {
+            championshipSoccer.getRoundSoccers().add(new RoundSoccer(i, numberTeams / 2,
+                    createMatches(championshipSoccer, new ArrayList<>(teams.values()))));
+        }
+
+        Assert.assertEquals(championshipSoccer.getRoundSoccers().size(), rounds);
         System.out.println("Fim TestSoccer");
     }
 
 
-    protected Championship<TeamSoccer> createChampionship(int numberTeams){
+    protected ChampionshipSoccer createChampionshipSoccer(int numberTeams) {
 
-        Championship<TeamSoccer> championship = new Championship<TeamSoccer>("Campeonato Brasileiro",
-                new DateTime(2019, 03, 01, 16, 00).toDate(),
-                new DateTime(2019, 05, 01, 18, 00).toDate(),
-                createTeams(numberTeams), new ChampionshipFormat(true,0,0,
-                0, ChampionshipFormat.Format.ALL_AGAINST_ALL));
+        ChampionshipSoccer championship = new ChampionshipSoccer("Campeonato Brasileiro",
+                new DateTime(2019, 05, 01, 16, 00).toDate(),
+                new DateTime(2019, 12, 05, 21, 00).toDate(),
+                createTeams(numberTeams), new ChampionshipFormat(true, 0, 0,
+                0, ChampionshipFormat.Format.ALL_AGAINST_ALL), 20, 11,
+                11, 3, 22);
 
         return championship;
     }
 
 
-    protected Map<String, TeamSoccer> createTeams(int numberTeams){
+    protected Map<String, TeamSoccer> createTeams(int numberTeams) {
         Map<String, TeamSoccer> teams = new HashMap<>();
-        for (int i=0; i < numberTeams; i++){
-            TeamSoccer teamSoccer = new TeamSoccer("Team " +i, "T" +i,
+        for (int i = 1; i <= numberTeams; i++) {
+            TeamSoccer teamSoccer = new TeamSoccer("Team " + i, "T" + i,
                     new DateTime(1914, 8, 26, 0, 0).toDate(),
-                    "Rua T1", 214, EnumHelper.Gender.M);
+                    "Rua " + i, 214, EnumHelper.Gender.M);
             teamSoccer.setPlayers(createPlayers());
             teamSoccer.setNumbersUniform(createNumbersUniform(teamSoccer.getPlayers()));
             teamSoccer.setCoach(createCoach("Coach " + i, teamSoccer.getFullName()));
@@ -142,7 +153,7 @@ public class TestSoccer {
     }
 
 
-    protected TreeMap<Integer, PlayerSoccer> createNumbersUniform(Set<PlayerSoccer> players){
+    protected TreeMap<Integer, PlayerSoccer> createNumbersUniform(Set<PlayerSoccer> players) {
         TreeMap<Integer, PlayerSoccer> numbersUniform = new TreeMap<>();
         int uniform = 1;
         for (PlayerSoccer p : players) {
@@ -152,4 +163,33 @@ public class TestSoccer {
         return numbersUniform;
     }
 
+
+    /**
+     * create matches para ALL_AGAINST_ALL
+     *
+     * @param championshipSoccer
+     * @param teams
+     * @return
+     */
+    protected Set<MatchSoccer> createMatches(ChampionshipSoccer championshipSoccer, List<TeamSoccer> teams) {
+        Set<MatchSoccer> matches = new HashSet<>();
+        int numberTeams = teams.size();
+
+        for (int i = 0; i < numberTeams; i++) {
+            TeamSoccer teamHome = teams.get(0);
+            TeamSoccer teamVisitor = teams.get((int) (Math.random() * numberTeams));
+            if (!teamVisitor.equals(teamHome)) {
+                matches.add(new MatchSoccer(new DateTime(2019, 02, 24, 16, 00),
+                        "Estádio Xyz", new Referee("Juiz", "Testando", new DateTime(1980, 05, 01, 10, 00),
+                        EnumHelper.Gender.M), false, teamHome, teamVisitor, championshipSoccer));
+                System.out.println(teamHome.getNickName() + " X " + teamVisitor.getNickName());
+                teams.remove(teamHome);
+                teams.remove(teamVisitor);
+                numberTeams = teams.size();
+            }
+            i = 0;
+        }
+
+        return matches;
+    }
 }

@@ -19,23 +19,19 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
     private final int maxSubstitutionsByTeam;
     private final int maxSubscribersByTeam;
     private final int totalPlayersTitular;
-    private TreeMap<Integer, RoundSoccer> roundSoccers;
+    private Set<RoundSoccer> roundSoccers = new LinkedHashSet<>();
 
     public ChampionshipSoccer(String name, Date begin, Date end, Map<String, TeamSoccer> teams, ChampionshipFormat championshipFormat,
                               int numberTeams, int totalPlayersTitular, int totalPlayersReserve,
-                              int maxSubstitutionsByTeam, int maxSubscribersByTeam, int numberClassifiedsByGroup,
-                              int numberClassifiedsByAllPlayoffs, boolean roundTrip) {
+                              int maxSubstitutionsByTeam, int maxSubscribersByTeam) {
         super(name, begin, end, teams, championshipFormat);
 
-        championshipFormat.setRoundtrip(roundTrip);
         if(championshipFormat.getFormat().equals(ChampionshipFormat.Format.ALL_AGAINST_ALL)){
-            this.setLimitRounds(getNumberRounds(numberTeams, 0, roundTrip, championshipFormat));
+            this.setLimitRounds(getNumberRounds(numberTeams, 0, championshipFormat));
         } else if(championshipFormat.getFormat().equals(ChampionshipFormat.Format.ALL_AGAINST_ALL_PLAYOFFS)){
-            championshipFormat.setNumberClassifiedsByAllPlayoffs(numberClassifiedsByAllPlayoffs);
-            this.setLimitRounds(getNumberRounds(numberTeams, numberClassifiedsByAllPlayoffs, roundTrip, championshipFormat));
+            this.setLimitRounds(getNumberRounds(numberTeams, championshipFormat.getNumberClassifiedsByAllPlayoffs(), championshipFormat));
         } else {
-            championshipFormat.setNumberClassifiedsByGroup(numberClassifiedsByGroup);
-            this.setLimitRounds(getNumberRounds(numberTeams, numberClassifiedsByGroup, roundTrip, championshipFormat));
+            this.setLimitRounds(getNumberRounds(numberTeams, championshipFormat.getNumberClassifiedsByGroup(), championshipFormat));
         }
 
         this.numberTeams = numberTeams;
@@ -45,9 +41,9 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
         this.maxSubscribersByTeam = maxSubscribersByTeam;
     }
 
-    public int getNumberRounds(int numberTeams, int numberClassifieds, boolean roundTrip, ChampionshipFormat championshipFormat){
+    public int getNumberRounds(int numberTeams, int numberClassifieds, ChampionshipFormat championshipFormat){
 
-        int rounds = roundTrip ? 2 : 1;
+        int rounds = championshipFormat.isRoundtrip() ? 2 : 1;
 
         switch (championshipFormat.getFormat()){
 
@@ -71,7 +67,11 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
     @Override
     public RoundSoccer getRound(int round, Championship championship) {
         if(this.equals(championship)){
-            return getRoundSoccers().get(round);
+            for(RoundSoccer roundSoccer : getRoundSoccers()){
+                if(round == roundSoccer.getRound()){
+                    return roundSoccer;
+                }
+            }
         }
         return null;
     }
@@ -88,11 +88,11 @@ public class ChampionshipSoccer extends Championship<TeamSoccer> implements Roun
         this.limitRounds = limitRounds;
     }
 
-    public TreeMap<Integer, RoundSoccer> getRoundSoccers() {
+    public Set<RoundSoccer> getRoundSoccers() {
         return roundSoccers;
     }
 
-    public void setRoundSoccers(TreeMap<Integer, RoundSoccer> roundSoccers) {
+    public void setRoundSoccers(Set<RoundSoccer> roundSoccers) {
         this.roundSoccers = roundSoccers;
     }
 
